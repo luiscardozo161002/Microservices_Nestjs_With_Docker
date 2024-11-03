@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Definición del servicio API Gateway
+  gateway:
+    build:
+      context: ./api-gateway  
+    ports:
+      - "3000:3000"  
+    networks:
+      - my_network 
+
+  # Definición del servicio de usuario
+  user-service:
+    depends_on:
+      - postgres_db  
+    build:
+      context: ./user-service  
+    environment:
+      DATABASE_HOST: postgres_db  
+      DATABASE_PORT: 5432  
+      DATABASE_USER: postgres  
+      DATABASE_PASSWORD: 161002 
+      DATABASE_NAME: micro_db  
+    networks:
+      - my_network  
+
+  # Definición del servicio de órdenes
+  order-service:
+    depends_on:
+      - postgres_db  
+    build:
+      context: ./order-service  
+    environment:
+      DATABASE_HOST: postgres_db  
+      DATABASE_PORT: 5432 
+      DATABASE_USER: postgres  
+      DATABASE_PASSWORD: 161002  
+      DATABASE_NAME: micro_db 
+    networks:
+      - my_network  
+
+  # Definición del servicio de productos
+  product-service:
+    depends_on:
+      - postgres_db  
+    build:
+      context: ./product-service  
+    environment:
+      DATABASE_HOST: postgres_db  
+      DATABASE_PORT: 5432  
+      DATABASE_USER: postgres  
+      DATABASE_PASSWORD: 161002  
+      DATABASE_NAME: micro_db  
+    networks:
+      - my_network  
+
+  # Definición del servicio de la base de datos PostgreSQL
+  postgres_db:
+    image: postgres:17.0  
+    container_name: postgres_db 
+    restart: always  
+    environment:
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: 161002  
+    ports:
+      - "5432:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+      - ./init-db:/docker-entrypoint-initdb.d  
+    networks:
+      - my_network  
+
+networks:
+  my_network: {}
+
+volumes:
+  postgres_data:
