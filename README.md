@@ -21,18 +21,6 @@ Abrir docker iniciar sesión, una vez se encuentre corriendo podemos verificar a
 docker --version
 ```
 
-Accedemos al directorio donde esta nuestro repositorio localmente. Accedemos dentro de la carpeta donde esta nuestro proyecto. En cada uno de los microservicios de 
-```order-service```,```product-service```,```user-service```. Agregar el archivo .env, ya que GitHub lo elimina cuando se sube, el proyecto al repositorio.
-
-Dentro del archivo .env, por cada microservicio, colocar el mismo contenido en cada uno de los microservicios:
-
-```
-DB_HOST=postgres_db
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=161002
-DB_DATABASE=micro_db
-```
 Reconstruimos las imágenes y levantamos los contenedores en segundo plano, con el comando: 
 
 ```
